@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "DKYj77+MXEImGWqZRN/xCC5nWA0pYoYGgUqONMKlAtY=",
+  "Source": "RobocopsWebAPI",
+  "BasePath": "_content/RobocopsWebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

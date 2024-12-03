@@ -1,0 +1,6 @@
+@RobocopsWebAPI_HostAddress = http://localhost:5276
+
+GET {{RobocopsWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
