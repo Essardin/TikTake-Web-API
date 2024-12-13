@@ -2,6 +2,7 @@ using dotenv.net;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RobocopsWebAPI.Data;
+using RobocopsWebAPI.Repositories;
 using RobocopsWebAPI.Repository;
 using System.Text.Json.Serialization;
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 DotEnv.Load();
 builder.Services.AddScoped<CloudinaryService>();
+builder.Services.AddScoped<SMTPMailService>();
 // Add services to the container.
 
 builder.Services.AddControllers()
@@ -43,7 +45,10 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowSpecificOrigin", policy =>
 	{
-		policy.WithOrigins("http://localhost:3000")
+		policy.WithOrigins("http://localhost:3000",
+			"http://localhost:8081",
+            "https://localhost:8081",
+            "exp://192.168.29.189:8081", "http://192.168.29.189:8081", "https://192.168.29.189:8081","*")
 		.AllowAnyHeader()
 		.AllowAnyMethod();
 	});

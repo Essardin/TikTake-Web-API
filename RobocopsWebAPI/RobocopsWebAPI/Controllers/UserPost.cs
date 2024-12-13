@@ -34,13 +34,13 @@ namespace RobocopsWebAPI.Controllers
                 }
 
                 var fileStream = postRequestModel.postImage.OpenReadStream();
-                var postUrl = await _cloudinaryService.UploadImageAsync(postRequestModel.postImage.FileName, fileStream,"Posts");
+                var postUrl = await _cloudinaryService.UploadImageAsync(postRequestModel.postImage.FileName, fileStream,$"Posts/{postRequestModel.userid}");
                
                 var newPost = new Post { 
                 
                     PostId = Guid.NewGuid().ToString(),
                     UserId= postRequestModel.userid,
-                    PostImageURL = postUrl,
+                    PostImageURL = postUrl.SecureUrl.ToString(),
                     PostCaption = postRequestModel.postCaption,
                     PostTimeStamp = DateTime.Now
                 };
@@ -73,24 +73,25 @@ namespace RobocopsWebAPI.Controllers
             {
 
 
-                var latestPosts = await _mainDbContext.Users
-                              .Include(x => x.Posts.OrderByDescending(p => p.PostTimeStamp).Take(3))
-                              .Include(x => x.Likes)
-                              .Include(x => x.Comments).ToListAsync();
+                //var latestPosts = await _mainDbContext.Users
+                //              .Include(x => x.Posts.OrderByDescending(p => p.PostTimeStamp).Take(3))
+                //              .Include(x => x.Likes)
+                //              .Include(x => x.Comments).ToListAsync();
 
 
-                //    var usersWithPosts = await _mainDbContext.Users
-                //.Select(x => new
-                //{
+                var usersWithPosts = await _mainDbContext.Users
+            .Select(user => new
+            {
+                User = user,
+                Posts = user.Posts.OrderByDescending(post => post.PostTimeStamp).Take(3),
+                Comments = user.Comments,
+                Likes = user.Likes
+            
+           
+            })
+    .ToListAsync();
 
-                //    Posts = x.Posts
-                //        .OrderBy(_ => Guid.NewGuid())  // Random order based on GUID
-                //        .Take(3)  // Take only 3 random posts
-                //        .ToList()  // Convert to list for projection
-                //})
-                //.ToListAsync();
-
-                return Ok(latestPosts);
+                return Ok(usersWithPosts);
             }
             catch (Exception ex)
             {

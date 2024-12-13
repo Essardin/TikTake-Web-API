@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using RobocopsWebAPI.Data;
 using RobocopsWebAPI.Models;
+using RobocopsWebAPI.Repositories;
+using RobocopsWebAPI.Repository;
 
 namespace RobocopsWebAPI.Controllers
 {
@@ -15,11 +17,19 @@ namespace RobocopsWebAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly MainDbContext _mainDbContext;
-        public AddUser(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, MainDbContext context)
+        private readonly SMTPMailService _smtpService;
+        private readonly CloudinaryService _cloudinaryService;
+        public AddUser(UserManager<IdentityUser> userManager, 
+            SignInManager<IdentityUser> signInManager, 
+            MainDbContext context,
+            SMTPMailService sMTPMailService,
+            CloudinaryService cloudinaryService )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mainDbContext = context;
+            _smtpService = sMTPMailService;
+            _cloudinaryService = cloudinaryService;
         }
 
         [HttpPost("add-user")]
@@ -46,6 +56,7 @@ namespace RobocopsWebAPI.Controllers
 
                     var user = new IdentityUser
                     {
+                        
                         UserName = register.UserName,
                         Email = register.Email
 
@@ -53,30 +64,46 @@ namespace RobocopsWebAPI.Controllers
                     var result = await _userManager.CreateAsync(user, pass);
                     if (result.Succeeded)
                     {
-                        var userDetails = await _userManager.FindByEmailAsync(register.Email);
+                         var userDetails = await _userManager.FindByEmailAsync(register.Email);
 
-                        var userProfile = new UserProfile
+                        var localImagePath = @"Assets/Images/profile_pic_demo.jpg";
+                        var fileStream = new FileStream(localImagePath, FileMode.Open, FileAccess.Read);
+                        var uploadDemoDP = await _cloudinaryService.UploadImageAsync(Path.GetFileName(localImagePath), fileStream, $"profilepic/{userDetails.Id}");
+
+                        if (uploadDemoDP.StatusCode == System.Net.HttpStatusCode.OK)
                         {
-                            UserId = userDetails.Id,
-                            Email = userDetails.Email,
-                            UserCreationDate = DateTime.Now
-                            
-                        };
+                            var userProfile = new UserProfile
+                            {
+                                UserId = userDetails.Id,
+                                FullName = register.FullName,
+                                Email = userDetails.Email,
+                                UserCreationDate = DateTime.Now,
+                                ProfilePicURL = uploadDemoDP.SecureUrl.ToString(),
+                                ProfilePicPublicID = uploadDemoDP.PublicId
 
-                        var result2 = await _mainDbContext.Users.AddAsync(userProfile);
+                            };
 
-                        if (result2 != null)
-                        {
-                            _mainDbContext.SaveChanges();
 
-                            return Ok("User registered successfully");
+                            var result2 = await _mainDbContext.Users.AddAsync(userProfile);
+
+                            if (result2 != null)
+                            {
+                                _mainDbContext.SaveChanges();
+
+                                await _smtpService.SendMail(register.Email, "Registration", "You are successfully registered");
+
+                                return Ok("User registered successfully");
+                            }
+                            else
+                            {
+                                return BadRequest("Failed to register.");
+                            }
+
                         }
                         else
                         {
-                            return BadRequest("Failed to register.");
+                            return BadRequest("Failed to upload Demo Profile Pic to Cloudinery");
                         }
-
-
 
                     }
                     else

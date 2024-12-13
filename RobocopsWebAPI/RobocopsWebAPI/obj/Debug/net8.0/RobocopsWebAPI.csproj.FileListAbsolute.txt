@@ -148,3 +148,4 @@ C:\Users\ASMA\Desktop\Web APIs\RobocopsWebAPI\RobocopsWebAPI\obj\Debug\net8.0\re
 C:\Users\ASMA\Desktop\Web APIs\RobocopsWebAPI\RobocopsWebAPI\bin\Debug\net8.0\CloudinaryDotNet.dll
 C:\Users\ASMA\Desktop\Web APIs\RobocopsWebAPI\RobocopsWebAPI\bin\Debug\net8.0\dotenv.net.dll
 C:\Users\ASMA\Desktop\Web APIs\RobocopsWebAPI\RobocopsWebAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\ASMA\Desktop\Web APIs\RobocopsWebAPI\RobocopsWebAPI\obj\Debug\net8.0\RobocopsWebAPI.sourcelink.json

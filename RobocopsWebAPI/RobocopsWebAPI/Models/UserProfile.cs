@@ -11,6 +11,9 @@ namespace RobocopsWebAPI.Models
 		public string? Bio { get; set; }
 
 		public string? ProfilePicURL {  get; set; }
+		public string? ProfilePicPublicID {  get; set; }
+		public string? VideoIntroURL {  get; set; }
+		public string? VideoIntroPublicID {  get; set; }
 		public DateTime UserCreationDate { get; set; }
 
 		public List<Post>? Posts { get; set; }

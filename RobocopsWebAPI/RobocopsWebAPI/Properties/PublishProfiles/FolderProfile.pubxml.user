@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Users\ASMA\Desktop\New folder</_PublishTargetUrl>
+    <History>True|2024-12-13T05:48:57.5810534Z||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="AuthDbConnection">
+      <Value>Server=db11342.databaseasp.net%3b Database=db11342%3b User Id=db11342%3b Password=B!e8sX5-3q%25Y%3b Encrypt=False%3b MultipleActiveResultSets=True%3b</Value>
+    </DestinationConnectionStrings>
+    <DestinationConnectionStrings Include="MainDbConnection">
+      <Value>Server=db11342.databaseasp.net%3b Database=db11342%3b User Id=db11342%3b Password=B!e8sX5-3q%25Y%3b Encrypt=False%3b MultipleActiveResultSets=True%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="RobocopsWebAPI.Data.AuthDbContext">
+      <Value>Server=db11342.databaseasp.net%3b Database=db11342%3b User Id=db11342%3b Password=B!e8sX5-3q%25Y%3b Encrypt=False%3b MultipleActiveResultSets=True%3b</Value>
+    </EFMigrations>
+    <EFMigrations Include="RobocopsWebAPI.Data.MainDbContext">
+      <Value>Server=db11342.databaseasp.net%3b Database=db11342%3b User Id=db11342%3b Password=B!e8sX5-3q%25Y%3b Encrypt=False%3b MultipleActiveResultSets=True%3b</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

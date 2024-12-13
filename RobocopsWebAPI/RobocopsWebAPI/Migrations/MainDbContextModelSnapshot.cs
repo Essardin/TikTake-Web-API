@@ -162,11 +162,20 @@ namespace RobocopsWebAPI.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfilePicPublicID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProfilePicURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UserCreationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("VideoIntroPublicID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoIntroURL")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
 
@@ -175,15 +184,13 @@ namespace RobocopsWebAPI.Migrations
 
             modelBuilder.Entity("RobocopsWebAPI.Models.Comment", b =>
                 {
-                    b.HasOne("RobocopsWebAPI.Models.Post", "Post")
+                    b.HasOne("RobocopsWebAPI.Models.Post", null)
                         .WithMany("Comments")
                         .HasForeignKey("PostId");
 
                     b.HasOne("RobocopsWebAPI.Models.UserProfile", "UserProfile")
                         .WithMany("Comments")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Post");
 
                     b.Navigation("UserProfile");
                 });
@@ -214,15 +221,13 @@ namespace RobocopsWebAPI.Migrations
 
             modelBuilder.Entity("RobocopsWebAPI.Models.Like", b =>
                 {
-                    b.HasOne("RobocopsWebAPI.Models.Post", "Post")
+                    b.HasOne("RobocopsWebAPI.Models.Post", null)
                         .WithMany("Likes")
                         .HasForeignKey("PostId");
 
                     b.HasOne("RobocopsWebAPI.Models.UserProfile", "UserProfile")
                         .WithMany("Likes")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Post");
 
                     b.Navigation("UserProfile");
                 });

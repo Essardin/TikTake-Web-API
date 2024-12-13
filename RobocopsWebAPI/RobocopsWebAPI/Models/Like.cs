@@ -6,9 +6,6 @@
 		public string? UserId {  get; set; }  // userid of the person who likes
 		public string? PostId {  get; set; }   // post id of post on which like is pushed
 		
-
-
-		public Post Post { get; set; }
 		public UserProfile UserProfile { get; set; }
 	}
 }

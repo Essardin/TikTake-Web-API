@@ -27,19 +27,11 @@ namespace RobocopsWebAPI.Data
 				.HasForeignKey(p => p.UserId);
 
 			modelBuilder.Entity<Comment>()
-				.HasOne(c => c.Post)
-				.WithMany(p => p.Comments)
-				.HasForeignKey(c => c.PostId);
-
-			modelBuilder.Entity<Comment>()
 				.HasOne(c => c.UserProfile)
 				.WithMany(u => u.Comments)
 				.HasForeignKey(c => c.UserId);
 
-			modelBuilder.Entity<Like>()
-				.HasOne(l => l.Post)
-				.WithMany(p => p.Likes)
-				.HasForeignKey(l => l.PostId);
+			
 
 			modelBuilder.Entity<Like>()
 				.HasOne(l => l.UserProfile)

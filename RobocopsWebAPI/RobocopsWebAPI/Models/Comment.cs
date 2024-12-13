@@ -11,7 +11,7 @@ namespace RobocopsWebAPI.Models
 		public string? CommentText { get; set; }
 		public DateTime CommentTimeStamp { get; set; }
 
-		public Post Post { get; set; }
+		
 		public UserProfile UserProfile { get; set; }
 	}
 }
